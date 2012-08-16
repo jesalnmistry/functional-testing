@@ -10,23 +10,18 @@ import org.junit.Before;
 import org.junit.Test;
 import java.util.regex.Pattern;
 
-public class BingTest extends SeleneseTestCase {
+public class SeleniumTest extends SeleneseTestCase {
 	@Before
 	public void setUp() throws Exception {
 		WebDriver driver = new FirefoxDriver();
-		String baseUrl = "http://www.bing.com/";
+		String baseUrl = "http://seleniumhq.org/";
 		selenium = new WebDriverBackedSelenium(driver, baseUrl);
 	}
 
 	@Test
-	public void testBing () throws Exception {
+	public void testSelenium() throws Exception {
 		selenium.open("/");
-		selenium.type("id=sb_form_q", "thoughtworks contact us");
-		selenium.click("id=sb_form_go");
-		selenium.waitForPageToLoad("30000");
-		selenium.click("link=Contact us | www.thoughtworks.com");
-		selenium.waitForPageToLoad("30000");
-		verifyTrue(selenium.isTextPresent("ACR Mansion G"));
+		verifyTrue(selenium.isTextPresent("What is Selenium?"));
 	}
 
 	@After
