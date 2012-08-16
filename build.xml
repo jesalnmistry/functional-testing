@@ -14,7 +14,7 @@
         </javac>
     </target>
 
-    <target name="test" depends="compile-test">
+    <target name="test" depends="clean, compile-test">
         <delete dir="junit-reports"/>
         <mkdir dir="junit-reports"/>
         <junit printsummary="yes" dir="test-classes" failureProperty="test.failed" haltonerror="true">
