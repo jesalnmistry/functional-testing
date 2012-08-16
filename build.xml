@@ -1,0 +1,34 @@
+<project name="biblioteca" default="test" basedir=".">
+
+    <target name="clean">
+        <delete dir="test-classes"/>
+    </target>
+    <path id="selenium-dep">
+        <fileset dir="lib" includes="**/*.jar"/>
+    </path>
+
+    <target name="compile-test">
+        <mkdir dir="test-classes"/>
+        <javac srcdir="test" destdir="test-classes">
+            <classpath refid="selenium-dep"/>
+        </javac>
+    </target>
+
+    <target name="test" depends="compile-test">
+        <delete dir="junit-reports"/>
+        <mkdir dir="junit-reports"/>
+        <junit printsummary="yes" dir="test-classes" failureProperty="test.failed" haltonerror="true">
+            <classpath>
+                <path path="test-classes"/>
+                <path refid="selenium-dep"/>
+            </classpath>
+            <batchtest fork="yes" todir="junit-reports">
+                <formatter type="xml"/>
+                <fileset dir="test-classes">
+                    <include name="**/*Test.class"/>
+                </fileset>
+            </batchtest>
+        </junit>
+        <fail message="test failed" if="test.failed"/>
+    </target>
+</project>
