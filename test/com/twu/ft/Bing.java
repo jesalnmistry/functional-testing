@@ -1,6 +1,8 @@
 package com.twu.ft;
 
 import com.thoughtworks.selenium.Selenium;
+import com.twu.ft.pages.BasePage;
+import com.twu.ft.pages.BingPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,25 +14,23 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class Bing {
-
     private Selenium selenium;
+    private BingPage bingPage;
 
     @Before
     public void setUp() throws Exception {
         WebDriver driver = new FirefoxDriver();
         String baseUrl = "http://www.bing.com/";
         selenium = new WebDriverBackedSelenium(driver, baseUrl);
+        bingPage = new BingPage(selenium);
     }
 
     @Test
     public void testBing() throws Exception {
-        selenium.open("/");
-        selenium.type("id=sb_form_q", "thoughtworks contact us");
-        selenium.click("id=sb_form_go");
-        selenium.waitForPageToLoad("30000");
-        selenium.click("//ul[@id='wg0']/li/div/div/div/h3/a/strong[3]");
-        selenium.waitForPageToLoad("30000");
-        assertThat(selenium.isTextPresent("IL 60601"), is(true));
+        bingPage.open();
+        bingPage.search("thoughtworks contact us");
+        BasePage searchPage = bingPage.goToSearchResult(2);
+        assertThat(searchPage.isTextPresent("IL 60601"), is(true));
     }
 
     @After
